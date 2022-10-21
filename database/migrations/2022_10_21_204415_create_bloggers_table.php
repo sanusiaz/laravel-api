@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('address');
             $table->decimal('salary');
             $table->string('status');
-            $table->dateTime('deleted_name');
-            $table->dateTime('blocked_date');
+            $table->dateTime('deleted_name')->nullable();
+            $table->dateTime('blocked_date')->nullable();
             $table->timestamps();
         });
     }

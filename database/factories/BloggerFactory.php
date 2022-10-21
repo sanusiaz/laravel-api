@@ -22,7 +22,7 @@ class BloggerFactory extends Factory
             'name' => $this->faker->name(),
             'title' => $this->faker->title(),
             'address' =>  $this->faker->streetAddress(),
-            'salary' => $this->faker->randomNumber(100, 3030393),
+            'salary' => $this->faker->numberBetween(100, 3030393),
             'status' => $status,
             'deleted_name' => ( $status == 'D' ) ? $this->faker->dateTimeThisDecade() : null ,
             'blocked_date' => ( $status == 'B' ) ? $this->faker->dateTimeThisDecade() : null
