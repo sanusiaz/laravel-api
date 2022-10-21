@@ -24,3 +24,11 @@ Route::group(["prefix" => "v1", "namespace" => "\App\Http\Controllers\Api\V1"], 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+// Added Blogger and Posts in version 2
+Route::group(['prefix' => 'v2', "namespace" => "\App\Http\Controllers\Api\V2"], function () {
+    Route::apiResource('/blogger', BloggerController::class);
+    Route::apiResource('/post', PostController::class);
+});
