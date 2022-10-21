@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\V2;
 use App\Models\Blogger;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\V2\BloggerResource;
+use App\Http\Resources\Api\V2\BloggerCollection;
 
 class BloggerController extends Controller
 {
@@ -15,7 +17,7 @@ class BloggerController extends Controller
      */
     public function index()
     {
-        return Blogger::all();
+        return new BloggerCollection (Blogger::all());
     }
 
     /**
@@ -35,9 +37,9 @@ class BloggerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Blogger $blogger)
     {
-        //
+        return new BloggerResource($blogger);
     }
 
     /**
