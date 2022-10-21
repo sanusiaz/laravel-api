@@ -4,7 +4,7 @@ namespace App\Http\Resources\Api\V2;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BloggerResource extends JsonResource
+class PostResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,14 +16,12 @@ class BloggerResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'slug' => $this->slug,
+            'featuredImage' => $this->featured_image,
             'title' => $this->title,
-            'address' => $this->address,
-            'salary' => $this->salary,
-            'status' => $this->status,
-            'deleteName' => $this->deleted_name,
-            'blockedDate' => $this->blocked_date,
-            'posts' => PostResource::collection($this->whenLoaded('posts'))
+            'body' => $this->body,
+            'author' => $this->author
+
         ];
     }
 }

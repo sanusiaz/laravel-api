@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api\V2;
 
-use App\Http\Filters\Api\V2\Classes\BloggerFilter;
-use App\Models\Blogger;
+use App\Http\Filters\Api\V2\Classes\PostFilter;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Api\V2\BloggerResource;
-use App\Http\Resources\Api\V2\BloggerCollection;
+use App\Http\Resources\Api\V2\PostResource;
+use App\Http\Resources\Api\V2\PostCollection;
 
-class BloggerController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,14 +18,12 @@ class BloggerController extends Controller
      */
     public function index(Request $request)
     {
-        $filteredResults = new BloggerFilter();
-        $filteredResults = $filteredResults->transform($request);
-        $blogger = Blogger::where($filteredResults);
-        if ( $request->query('includePosts') ) {
-            $blogger = $blogger->with('posts');
-        }
+        $filterRequest = new PostFilter();
+        $filterRequest = $filterRequest->transform($request);
 
-        return new BloggerCollection ($blogger->paginate()->appends($request->query()));
+        $posts = Post::where($filterRequest)->paginate(10)->appends($request->query());
+
+        return new PostCollection($posts);
     }
 
     /**
@@ -45,9 +43,9 @@ class BloggerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Blogger $blogger)
+    public function show(Post $post)
     {
-        return new BloggerResource($blogger->loadMissing('posts'));
+        return new PostResource( $post );
     }
 
     /**
