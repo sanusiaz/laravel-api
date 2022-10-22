@@ -9,6 +9,7 @@ use App\Http\Resources\Api\V2\BloggerResource;
 use App\Http\Resources\Api\V2\BloggerCollection;
 use App\Http\Requests\Api\V2\StoreBloggerRequest;
 use App\Http\Filters\Api\V2\Classes\BloggerFilter;
+use App\Http\Requests\Api\V2\UpdateBloggerRequest;
 
 class BloggerController extends Controller
 {
@@ -29,11 +30,14 @@ class BloggerController extends Controller
         return new BloggerCollection ($blogger->paginate()->appends($request->query()));
     }
 
+    
+
+    
     /**
-     * Store a newly created resource in storage.
+     * Store New Blogger
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreBloggerRequest $request
+     * @return void
      */
     public function store(StoreBloggerRequest $request)
     {
@@ -48,7 +52,11 @@ class BloggerController extends Controller
      */
     public function show(Blogger $blogger)
     {
-        return new BloggerResource($blogger->loadMissing('posts'));
+        if ( request()->query('includePosts') ) {
+            $blogger = $blogger->loadMissing('posts');
+        }
+
+        return new BloggerResource($blogger);
     }
 
     /**
@@ -58,9 +66,15 @@ class BloggerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(UpdateBloggerRequest $request, Blogger $blogger)
+    {  
+        return ( $blogger->update($request->all()) ) 
+        ? response([
+            'message' => 'Updated Successfully'
+        ], 202) 
+        : response([
+            'message' => 'An Errror Occurred In Updating Blogger Information'
+        ], 202);
     }
 
     /**
@@ -69,8 +83,8 @@ class BloggerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy( Blogger $blogger)
     {
-        //
+        return $blogger->delete();
     }
 }

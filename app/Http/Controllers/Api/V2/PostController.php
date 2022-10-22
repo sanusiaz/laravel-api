@@ -37,6 +37,10 @@ class PostController extends Controller
         //
     }
 
+    public function bulkStore(BulkStorePostRequest $request) {
+        
+    }
+
     /**
      * Display the specified resource.
      *
