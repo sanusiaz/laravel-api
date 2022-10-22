@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api\V2;
 
-use App\Http\Filters\Api\V2\Classes\BloggerFilter;
 use App\Models\Blogger;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\V2\BloggerResource;
 use App\Http\Resources\Api\V2\BloggerCollection;
+use App\Http\Requests\Api\V2\StoreBloggerRequest;
+use App\Http\Filters\Api\V2\Classes\BloggerFilter;
 
 class BloggerController extends Controller
 {
@@ -34,9 +35,9 @@ class BloggerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBloggerRequest $request)
     {
-        //
+        return new BloggerResource (Blogger::create($request->all()));
     }
 
     /**
