@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::fallback(function () {
+    'Request Not Found... Try /Customers to load all customers';
+});

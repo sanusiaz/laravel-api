@@ -39,6 +39,7 @@ class UpdateBloggerRequest extends FormRequest
             ];
         }
         else {
+            // we are in an update method
             return [
                 'name' => ['sometimes', 'string', 'max:255'],
                 'title' => ['sometimes', 'string', 'max:255'],
