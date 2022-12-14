@@ -37,6 +37,8 @@ class BulkStroreInvoiceRequest extends FormRequest
     {
 
         $data = [];
+
+        // foreach( $this-> )
             
         $this->merge($data);
     }
